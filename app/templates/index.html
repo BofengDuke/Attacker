@@ -1,0 +1,50 @@
+{% include 'header.html' %}
+
+
+<header class="container" >
+	<div class="row banner">
+		<img  src="{{ url_for('static',filename='images/banner.png')  }}">
+	</div>
+</header>
+
+<section class="container contentBox">
+	<div class="row">
+		<div class="input-group searchBox">
+			<span class="input-group-addon">
+				<i class="icon-search"></i>
+			</span>
+			<input type="text" name="search" class="form-control" placeholder="webapp phpcms || country cn ">
+			<span class="input-group-btn">
+				<button id="searchBtn" class="btn btn-default" type="button">搜索</button>
+			</span>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="useExample">
+			<h3>搜索语法:</h3>
+			<p><span>webapp</span> :搜索应用</p>
+			<p><span>country</span> :搜索某国家的应用</p>
+			<p><span>city</span> :搜索某一城市</p>
+			<p><span>language</span> :搜索编程语言</p>
+			<p><span> || </span> : 用于分割 query 与 page </p>
+			<hr>
+			<h3>使用例子:</h3>
+			<p>webapp  phpcms || country  cn</p>
+
+		</div>
+	</div>
+</section>
+
+<script type="text/javascript">
+	$(function(){
+		$("#searchBtn").click(function(){
+			var postData = $(this).parents(".input-group").find("input").val();
+			url = "/search?action=query&params="+postData
+			window.location  = url
+		});
+	});
+
+</script>
+
+{% include 'footer.html' %}

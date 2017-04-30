@@ -1,0 +1,110 @@
+{% include 'header.html' %}
+
+<header>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3 col-md-3 col-sm-4 col-xs-6">
+				<img src="{{ url_for('static',filename='images/icon_small.png') }}">
+			</div>
+			<div class="col-lg-9 col-md-9 col-sm-8 col-xs-6">
+				<div class="input-group searchBox2">
+					<span class="input-group-addon">
+						<i class="icon-search"></i>
+					</span>
+					<input type="text" name="search" class="form-control" placeholder="webapp phpcms || country cn ">
+					<span class="input-group-btn">
+						<button id="searchBtn" class="btn btn-default" type="button">搜索</button>
+					</span>
+				</div>
+			</div>
+
+		</div>
+		
+	</div>
+	<hr style="margin-top: 1em">
+</header>
+
+<section class="container">
+	{% if total > 0 %}
+	<div class="row">
+		<p class="showTotal">查找到{{ total }}条数据, 耗时: <b> {{ time_use }} ms</b></p>
+	</div>
+	{% endif %}
+	<div class="row">
+		<ul class="s_result web">
+		{% for item in datas %}
+		<li class="s_item" >
+			<h3><a href="{{ item['webapp'][0]['url'] }}" target="blank"> {{ item['title'] }} </a></h3>
+			<hr>
+			<div class="row">
+				<div class="col-xs-6 leftPane">
+					<div class="webapp">
+						{% for it in item['db'] %}
+							<span title="db">{{ it['name'] }}</span>
+						{% endfor %}
+						<span title="language">{{ item['language'][0] }}</span>
+						{% for it in item['webapp'] %}
+							<span title="webapp">{{ it['name'] }}</span>
+						{% endfor %}
+					</div>
+					<div class="otherInfo">
+						<p><span>URL: </span>{{ item['webapp'][0]['url'] }}</p>
+						<p><span>Country: </span>{{ item['geoinfo']['country']['names']['en'] }}</p>
+						<p><span>City: </span> {{ item['geoinfo']['city']['names']['zh-CN'] }} </p>
+						<p><i class="icon icon-globe"></i> {{ item['geoinfo']['location']['lat'] }} , {{ item['geoinfo']['location']['lon'] }} </p>
+						<p class="ip"><i class="icon icon-info-sign"></i><a href="{{ item['webapp']['url'] }}"> {{ item['ip'][0] }} </a></p>
+						<p><i class="icon icon-time"></i> {{ item['check_time'] }} </p>
+
+					</div>
+				</div>
+
+				<div class="col-xs-6 rightPane">
+					<pre class="webHeaderInfo">
+						{{- item['headers'] -}}
+					</pre>
+				</div>
+			</div>
+		</li>
+		{% endfor %}
+		</ul>
+		<div class="pageBox">
+			<ul class="pager">
+				{% if curr_page - 1 > 0 %}
+					{% set prev = curr_page-1  %}
+					<li class="previous"><a href="{{curr_path~'&page='~ prev}}"><< 上一页</a></li>
+				{% endif %}
+				{% if max_page > 1 %}
+					{% for page in range(1,max_page+1) %}
+						{% if curr_page == page %}
+							{% set active = 'active' %}
+						{% endif %}
+						<li class="item {{ active }}">
+							<a href="{{ curr_path ~'&page='~ page }}"> {{ page }} </a>
+						</li>
+
+					{% endfor %}
+				{% endif %}
+				{% if curr_page + 1 <= max_page %}
+					{% set next = curr_page+1 %}
+					<li class="next"><a href="{{ curr_path~'&page='~ next }}">下一页>></a></li>
+				{% endif %}
+			</ul>
+		</div>
+		
+	</div>
+</section>
+
+
+<script type="text/javascript">
+	$(function(){
+		$("#searchBtn").click(function(){
+			var postData = $(this).parents(".input-group").find("input").val();
+			url = "/search?action=query&params="+postData
+			window.location  = url
+		});
+
+	});
+</script>
+
+
+{% include'footer.html' %}

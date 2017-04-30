@@ -1,0 +1,115 @@
+{% include "header.html" %}
+
+<div class="container padding-top-2">
+	<div class="row ">
+		<section class="leftMenuBox col-lg-4 col-md-4 col-sm-4 hidden-xs">
+			<h1><i class="icon icon-th-list icon-2x"></i> 查看模块</h1>
+			<nav class="menu leftMenu" data-ride="menu" >
+				<ul class="nav nav-primary">
+					<li class="nav-parent">
+						<a href="javascript:;"><i class="icon icon-th"> PHPCMS</i></a>
+						<ul class="nav">
+							<li><a href="javascript:;">phpcms v9 wap模块注入</a></li>
+							<li><a href="javascript:;">phpcms v9 任意文件上传漏洞</a></li>
+						</ul>
+					</li>
+				</ul>
+			</nav>
+		</section>
+
+		<section class="rightBox col-lg-7 col-md-7 col-sm-7 col-sm-offset-1 ">
+			<div class="input-group attackBox">
+				<span class="input-group-addon">
+					<i class="icon-flag"></i>
+				</span>
+				<input id="attack" type="text" name="attack" class="form-control" placeholder="use [module] || url [url] ">
+				<span class="input-group-btn">
+					<button id="attackBtn" class="btn btn-default" type="button">攻击</button>
+				</span>
+			</div>
+
+			<div class="attackUseEx clearfix">
+				<h3>参数:</h3>
+				<p><span>use</span> :[必须] 使用模块</p>
+				<p><span>url</span> :指定链接攻击</p>
+				<p><span>all</span> :攻击数据库中所有的网站主机</p>
+				<p><span>webapp</span> :指定web app的查询结果进行攻击</p>
+				<p><span>country</span> :指定国家的主机进行攻击</p>
+				<p><span> || </span> : 用于分割 query 与 page </p>
+				<h3>使用示例</h3>
+				<p><span>指定url: </span> use exploit/phpcms/phpcms_v9_wap_sql_injection || url http://demo.com</p>
+				<p><span>全部主机: </span> use exploit/phpcms/phpcms_v9_wap_sql_injection || all allhosts</p>
+				<p><span>指定app: </span>use exploit/phpcms/phpcms_v9_wap_sql_injection || webapp phpcms</p>
+				<p><span>指定国家: </span>use exploit/phpcms/phpcms_v9_wap_sql_injection || webapp phpcms || country cn </p>
+				
+				<hr>
+			</div>
+			<div class="row showResultBox">
+				<h2>结果显示:</h2>
+				<div id="result" class="showAttackResult">
+				 	<!-- e.x. admin:123456 -->
+				 	
+				</div>
+			</div>
+		</section>
+	</div>
+</div>
+
+<script type="text/javascript">
+$(function(){
+$("#attackBtn").click(function(){
+	var attackContent = $('input[name="attack"]').val();
+	$(".showResultBox").show();
+	$(".showResultBox h2").text("正在执行,请等待");
+	$("#result").html("<p class='text-info'> waiting.... </p>");
+	$.ajax({
+		type:'POST',
+		url:"/attack",
+		data:{'content':attackContent},
+		dataType:'json',
+		success: function(data){
+			$("#result").html("<p class='text-info'> 结果如下:</p>");
+			if(data.result){
+				var results = data.result;
+				// for (var i=0;i<results.length;i++){
+				if(results.error){
+					$("#result").append("<p>"+result.error+"</p>");
+				}
+				if(results){
+					for (var i=0;i<results.length;i++){
+						$("#result").append("<pre><b>"+results[i].host+"</b>"+results[i].info+"</pre>");
+					}
+				}
+
+			}
+			else if(data.error){
+				$("#result").html("<p class='warning-text' >"+data.error+"</p>");
+			}
+			else{
+				$("#result").html("<p>This is an error.</p>");
+			}
+			console.log(data);
+		},
+		error: function(XMLHttpRequest,textStatus,errorThrown){
+			console.log(textStatus,errorThrown);
+			$("#result").html("<p class='warning-text'> Error_empty_response from service!</p>");
+		}
+	});
+
+	// console.log('attack------');
+	// namespace = "/attack";
+	// var socket = io.connect(location.protocol+"//"+document.domain+":"+location.port+namespace);
+	// socket.on('attack_response',function(data){
+	// 	console.log('attack_response: '+ data);
+	// 	$("$result").append("<p><b>"+data.host+": </b>"+data.info+"</p>");
+	// });
+	
+
+});
+
+});
+</script>
+
+<!-- <script type="text/javascript" src="{{ url_for('static',filename='attack.js') }}"></script> -->
+
+{% include 'footer.html' %}

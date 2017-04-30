@@ -1,0 +1,160 @@
+{% include "header.html" %}
+
+<div class="container padding-top-2">
+	<div class="row ">
+		<section class="leftMenuBox col-lg-2 col-md-4 col-sm-4 hidden-xs">
+			<h1><i class="icon icon-th-list icon-2x"></i> 管理数据</h1>
+			<nav class="menu leftMenu" data-ride="menu" >
+				<button class="btn btn-primary" data-toggle="modal" data-target="#removeAll">清空数据库数据</button>
+				<button  class="btn btn-primary showDBBtn" >查看数据库</button>
+				<ul class="nav nav-primary">
+					<li class="nav-parent show">
+						<a href="javascript:;"><i class="icon icon-th"> 增加数据</i></a>
+						<ul class="nav addData">
+							<li><a href="#">百度搜索</a></li>
+							<li><a href="#">钟馗之眼</a></li>
+							<li><a href="#">指定IP段</a></li>
+						</ul>
+					</li>
+				</ul>
+			</nav>
+		</section>
+
+		<section class="rightBox addDataBox col-lg-9 col-md-7 col-sm-7 col-sm-offset-1 ">
+			<div class="baidu item">
+				<div class="input-group attackBox">
+					<span class="input-group-addon">
+						<i class="icon-flag"></i>
+					</span>
+					<input  type="text" name="baidu" class="search form-control">
+					<span class="input-group-btn">
+						<button class="btn btn-default queryBtn" type="button">添加数据</button>
+					</span>
+				</div>
+
+				<div class="attackUseEx clearfix">
+					<p>使用Google Hacking搜索语法,通过百度获取信息并添加到数据库中</p>
+					<h3>参数:</h3>
+					<p><span>query</span>: 要查询的语句 </p>
+					<p><span>page</span>: 查询结果中获取多少页的数据,默认 1 页</p>
+					<p><span> || </span> : 用于分割 query 与 page </p>
+					<h3>使用示例:</h3>
+					<p><span>默认页数: </span>query inurl:"*/index.php?id=1"</p>
+					<p><span>指定页数: </span>query inurl:"*/index.php?id=1" || page 3 </p>
+					<hr>
+				</div>
+			</div>
+
+			<div class="zoomeye item">
+				<div class="input-group attackBox">
+					<span class="input-group-addon">
+						<i class="icon-flag"></i>
+					</span>
+					<input type="text" name="zoomeye" class="search form-control">
+					<span class="input-group-btn">
+						<button class="btn btn-default queryBtn" type="button">添加数据</button>
+					</span>
+				</div>
+
+				<div class="attackUseEx clearfix">
+					<p>使用钟馗之眼获取数据,并添加到数据库中</p>
+					<h3>参数:</h3>
+					<p><span>app</span>: 要查询的应用</p>
+					<p><span>country</span>: 指定国家</p>
+					<p><span>city</span>: 指定城市</p>
+	
+					<p><span>page</span>: 查询结果中获取多少页的数据,默认 1 页</p>
+					<p><span>login:</span> 格式 (username,passwd) ,登录到zoomeye中通过api获取数据,速度快</p>
+					<p><span> || </span> : 用于分割查询语句</p>
+					<h3>使用示例:</h3>
+					<p><span>查询应用: </span>app phpcms</p>
+					<p><span>指定国家: </span>app phpcms || country cn</p>
+					<p><span>登录用户: </span>app phpcms || country cn || login (username,password)</p>
+					<hr>
+				</div>
+			</div>
+
+			<div class="fromIP item">
+				<div class="input-group attackBox">
+					<span class="input-group-addon">
+						<i class="icon-flag"></i>
+					</span>
+					<input type="text" name="iprange" class="search form-control">
+					<span class="input-group-btn">
+						<button class="btn btn-default queryBtn" type="button">IP段</button>
+					</span>
+				</div>
+
+				<div class="attackUseEx clearfix">
+					<p>通过扫描IP段内的主机,获取其中的网站主机,适用公司,学校等有一定IP范围的对象</p>
+					<h3>参数:</h3>
+					<p><span>ipstart</span>: 起始IP地址, e.x. 192.168.0.1</p>
+					<p><span>ipend</span>: 结束IP地址, e.x. 192.168.0.255</p>
+					<p><span> || </span> : 用于分割查询语句</p>
+					<p>起始IP等于结束IP时,为查找该IP下所有的域名</p>
+					<h3>使用示例:</h3>
+					<p><span>单独IP: </span>ipstart 192.168.0.1 || ipend 192.168.0.1</p>
+					<p><span>IP段: </span>ipstart 192.168.0.1 || ipend 192.168.0.255</p>
+					<hr>
+				</div>
+			</div>
+				
+			<div class="showDBContent">
+				<h1>欢迎使用,请从左边栏目选择功能</h1>
+				<h2>当前数据库的网站数目为: <span id="dataNum">{{ dataNum }}</span></h2>
+			</div>
+
+			<div class="row showResultBox">
+				<h2>结果显示:</h2>
+				<div class="showAttackResult">
+				 	<!-- result -->
+				</div>
+			</div>
+		</section>
+		
+		<section class="modal fade" id="removeAll">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden = "true">X</span><span class="sr-only">关闭</span></button>
+						<h4 class="modal-title text-warning">删除数据</h4>
+					</div>
+					<div class="modal-body">
+						<p id="confirmRmAll"  class="text-info">确定要删除全部数据吗?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+						<button id="removeBtn" type="button" class="btn btn-warning" data-dismiss="modal" >确定</button>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="modal fade" id="confirm">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden = "true">X</span><span class="sr-only">关闭</span></button>
+						<h4 class="modal-title text-warning">删除数据结果</h4>
+					</div>
+					<div class="modal-body">
+						<p id="resultMessage"  class="text-success">结果</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
+					</div>
+				</div>
+			</div>
+		</section>
+
+
+
+	</div>
+</div>
+
+
+
+<script type="text/javascript" src="{{ url_for('static',filename='managehosts.js') }}"></script>
+
+
+{% include 'footer.html' %}
