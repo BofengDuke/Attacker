@@ -1,2 +1,5 @@
 *.cpp linguist-language=Python
 *.c linguist-language=Python
+*.cc linguist-language=Python
+*.h linguist-language=Python
+*.lua linguist-language=Python
