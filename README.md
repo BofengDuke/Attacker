@@ -16,6 +16,7 @@
 # virtualenv -p /usr/bin/python3 venv3
 # source venv3/bin/activate
 ```
+还依赖Mongodb的环境,安装方法请自己查询。 [Mongodb官网](https://www.mongodb.com/)
 
 启动运行环境后就可以运行程序
 程序运行:
