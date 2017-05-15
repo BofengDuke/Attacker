@@ -152,16 +152,16 @@ class Crawler(object):
 
 def main():
 	print('start')
-	crawl = Crawler()
-	querys = ['app:wordpress country:cn','app:phpcms country:cn','app:discuz country:cn']
-	login = ("805000484@qq.com","bofeng##@DUKE159")
-	mongo = Mongodb()
-	for query in querys:
-		total = crawl.zoomeye_crawler(query=query,login=login,max_page=2)
-		print(total)
+	# crawl = Crawler()
+	# querys = ['app:wordpress country:cn','app:phpcms country:cn','app:discuz country:cn']
+	# login = ("username","password")
+	# mongo = Mongodb()
+	# for query in querys:
+	# 	total = crawl.zoomeye_crawler(query=query,login=login,max_page=2)
+	# 	print(total)
 	
-	info = mongo.getitem()
-	pprint(info)
+	# info = mongo.getitem()
+	# pprint(info)
 	
 	# bquery = "inurl:*.cqu.edu.cn"
 	# crawl.baidu_crawler(query=bquery,max_page=1)
