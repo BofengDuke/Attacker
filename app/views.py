@@ -11,7 +11,7 @@ import time
 
 import sys
 sys.path.append('..')
-from config import PAGE_SIZE
+from config import PAGE_SIZE,USERNAME_Z,PASSWORD_Z
 
 
 
@@ -178,7 +178,7 @@ def managehost():
 			if 'login' in params.keys():
 				login = set(params['login'])
 			else:
-				login = ('805000484@qq.com',"bofeng##@DUKE159")
+				login = (USERNAME_Z,PASSWORD_Z)
 			total = crawler.zoomeye_crawler(query=_query,login=login,max_page=max_page)
 			return jsonify({'result':'Zoomeye: {}'.format(total)})
 
