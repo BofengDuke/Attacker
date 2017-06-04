@@ -10,8 +10,8 @@
 # python3 -m pip install virtualenv
 ```
     
-接着在项目**Attacker/**目录中创建一个python的虚拟环境文件夹,并指定python3创建虚拟环境,
-下面都是在**Attacker/**目录下进行
+接着在项目 **Attacker/** 目录中创建一个python的虚拟环境文件夹,并指定python3创建虚拟环境,
+下面都是在 **Attacker/** 目录下进行
 
 ``` bash
 # virtualenv -p /usr/bin/python3 venv3
