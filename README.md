@@ -10,13 +10,22 @@
 # python3 -m pip install virtualenv
 ```
     
-接着创建一个python的虚拟环境文件夹,并指定python3创建虚拟环境,
-然后启动环境
-```
+接着在项目**Attacker/**目录中创建一个python的虚拟环境文件夹,并指定python3创建虚拟环境,
+下面都是在**Attacker/**目录下进行
+
+``` bash
 # virtualenv -p /usr/bin/python3 venv3
-# source venv3/bin/activate
 ```
-还依赖Mongodb的环境,安装方法请自己查询。 [Mongodb官网](https://www.mongodb.com/)
+
+启动虚拟环境，并安装项目依赖（在 **Attacker/** 下有requirements.txt）
+
+```bash
+# source venv3/bin/activate
+# python3 -m pip install -r requirements.txt
+```
+
+
+项目还依赖 Mongodb 的环境,安装方法请自己查询。 [Mongodb官网](https://www.mongodb.com/)
 
 启动运行环境后就可以运行程序
 程序运行:
